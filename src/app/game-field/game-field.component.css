@@ -1,0 +1,65 @@
+:host {
+	display: flex;
+
+}
+
+.gameField {
+	margin: 100px auto;
+	/*display: flex;*/
+	/*flex-direction: row;*/
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	display: flex;
+	flex-direction: row;
+}
+
+li {
+	width: 30px;
+	height: 30px;
+	/*margin: 1px;*/
+	background: yellowgreen;
+	line-height: 30px;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+	border: 1px solid white;
+	user-select: none;
+}
+
+li:hover {
+	background: yellow;
+}
+
+li.mine {
+	background: red;
+}
+
+li.open {
+	background: grey;
+}
+
+li.flag {
+	position: relative;
+}
+
+li.flag:before {
+	content: 'f';
+	font-size: 16px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: red;
+}
+
+li.boom {
+	background: orange;
+}
+
+ li.active {
+	 background: blue;
+ }

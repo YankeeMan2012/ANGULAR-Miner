@@ -1,0 +1,36 @@
+<h1>Miner</h1>
+
+<form #optionsForm="ngForm" novalidate>
+    <div class="inputBox">
+        <label>Высота</label>
+        <input [(ngModel)]="options.width"
+               pattern="[\d]{1,2}"
+               type="number"
+               name="width"
+               placeholder="Высота поля"
+               required>
+    </div>
+    <div class="inputBox">
+        <label>Ширина</label>
+        <input [(ngModel)]="options.height"
+               pattern="[\d]{1,2}"
+               type="number"
+               name="height"
+               placeholder="Ширина поля"
+               required>
+    </div>
+    <div class="inputBox">
+        <label>Количество мин</label>
+        <input [(ngModel)]="options.mines"
+               pattern="[\d]{1,2}"
+               type="number"
+               name="mines"
+               placeholder="Количество мин"
+               required>
+    </div>
+    <div class="inputBox">
+        <button [disabled]="optionsForm.invalid"
+                class="btn btn-default"
+                (click)="play($event)">Играть</button>
+    </div>
+</form>
