@@ -12,10 +12,16 @@
             [class.boom]="cell.state == 3"
             [class.flag]="cell.flag"
             [class.active]="cell.active"
+
+            [class.one]="cell.title == 1"
+            [class.two]="cell.title == 2"
+            [class.three]="cell.title == 3"
+            [class.four]="cell.title == 4"
+            [class.five]="cell.title == 5"
+            [class.six]="cell.title == 6"
+            [class.seven]="cell.title == 7"
+            [class.eight]="cell.title == 8"
+
         >{{cell.state == 1 ? cell.title : ''}}</li>
-        <!--[class.mine]="cell.state == 2"-->
     </ul>
 </div>
-
-
-

@@ -1,12 +1,15 @@
 :host {
+	width: 100%;
+	height: 100%;
+	background: #91a0b5;
 	display: flex;
-
+	flex-direction: column;
+	align-items: center;
 }
 
 .gameField {
 	margin: 100px auto;
-	/*display: flex;*/
-	/*flex-direction: row;*/
+	border: 1px solid #747f89;
 }
 
 ul {
@@ -20,26 +23,37 @@ ul {
 li {
 	width: 30px;
 	height: 30px;
-	/*margin: 1px;*/
-	background: yellowgreen;
+	background: radial-gradient(#5273dd, #344bbe);
 	line-height: 30px;
 	text-align: center;
-	font-weight: bold;
 	cursor: pointer;
-	border: 1px solid white;
+	border: 1px solid #10224b;
 	user-select: none;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 li:hover {
-	background: yellow;
+	border: 1px solid #5c73b7;
+	background: radial-gradient(#a8c6fa, #a0bcf2);
 }
 
 li.mine {
-	background: red;
+	position: absolute;
+}
+
+li.mine:before {
+	content: '';
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 15px;
+	height: 15px;
+	background: url(../../assets/bomb.svg) center center / cover no-repeat;
 }
 
 li.open {
-	background: grey;
+	background: radial-gradient(#bfd0e7, #e1e7f3);
 }
 
 li.flag {
@@ -47,19 +61,60 @@ li.flag {
 }
 
 li.flag:before {
-	content: 'f';
+	content: '';
 	font-size: 16px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	color: red;
+	width: 15px;
+	height: 15px;
+	background: url(../../assets/flag.png) center center / cover no-repeat;
 }
 
 li.boom {
-	background: orange;
+	position: relative;
 }
 
- li.active {
-	 background: blue;
- }
+li.boom:before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 20px;
+	height: 20px;
+	background: url(../../assets/boom.svg) center center / cover no-repeat;
+}
+
+li.active {
+	background: radial-gradient(#7ba2dd, #566ebb);
+}
+
+li.one {
+	color: #4651a5;
+}
+
+li.two {
+	color: #2c8d2a;
+}
+
+li.three {
+	color: #98030e;
+}
+
+li.four {
+	color: #03007b;
+}
+li.five {
+	color: #5e050d;
+}
+li.six {
+	color: #006c73;
+}
+li.seven {
+	color: #736600;
+}
+li.eight {
+	color: #5e3b50;;
+}

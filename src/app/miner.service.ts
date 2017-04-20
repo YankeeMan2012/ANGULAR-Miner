@@ -5,7 +5,7 @@ export class MinerService {
     private options: IOptions = {
         width: 30,
         height: 16,
-        mines: 99
+        mines: 50
     };
     private stateGame = {
         victory: false,
