@@ -48,7 +48,9 @@ export class GameField implements OnInit {
         if (e.which === 3) this.rightPress = false;
         if (e.which === 1) this.leftPress = false;
         if (!this.leftPress || !this.rightPress) {
-            this.field = this.MINER.changeActiveCells(this.field, cell, false, e.which === 1);
+            let isOpen: boolean = e.which === 1 && this.rightPress || e.which === 3 && this.leftPress;
+            this.field = this.MINER.changeActiveCells(this.field, cell, false, isOpen);
+            console.log(e.which === 1 , this.rightPress);
         }
     }
 
