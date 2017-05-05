@@ -3,3 +3,8 @@ export interface IOptions {
     height: number;
     mines: number;
 }
+
+export interface ILevel {
+    title: string;
+    // selected: boolean;
+}

@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 
+import {DomSanitizer} from '@angular/platform-browser';
+import {MdIconRegistry} from '@angular/material';
+
 import {IOptions} from '../options';
 import {MinerService} from '../miner.service';
 
@@ -17,7 +20,11 @@ export class Options {
         mines: null
     };
 
-    constructor (private router: Router, private miner: MinerService) {}
+    constructor (private router: Router, private miner: MinerService, iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+        iconRegistry.addSvgIcon(
+            'bomb',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/img/bomb.svg'));
+    }
 
     private play(e): void {
         e.preventDefault();
