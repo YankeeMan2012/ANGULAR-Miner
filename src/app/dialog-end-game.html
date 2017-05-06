@@ -1,0 +1,9 @@
+<h1>{{res.title}}</h1>
+<div class="time">Время: {{res.time}} сек.</div>
+<div class="date">Дата: {{res['stat'].date | date}}</div>
+<div class="best">Лучшее время: {{res['stat'].best}} сек.</div>
+<div class="game">Проведено игр: {{res['stat'].game}}</div>
+<div class="win">Выиграно игр: {{res['stat'].win}}</div>
+<div class="percent">Процент: {{percent}}%</div>
+<button md-button color="primary" (click)="close(false)">Выход</button>
+<button md-raised-button color="primary" (click)="close(true)">Новая игра</button>
