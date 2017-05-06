@@ -71,7 +71,6 @@ export class AppComponent implements OnInit {
             this.statistics = JSON.parse(localStorage.statistics);
         }
         this.start();
-        console.log(this.statistics);
     }
 
     private endGame(msg): void {
