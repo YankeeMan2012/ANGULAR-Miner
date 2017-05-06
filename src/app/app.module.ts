@@ -7,17 +7,13 @@ import {MaterialModule} from '@angular/material';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import 'hammerjs';
 
-import {AppComponent} from './app.component';
-import {Options} from './options/options.component';
-import {GameField} from './game-field/game-field.component';
-
-import {MinerService} from './miner.service';
+import {AppComponent, DialogEndGame} from './app.component';
+import {MinerService} from './shared/miner.service';
 
 @NgModule({
     declarations: [
         AppComponent,
-        Options,
-        GameField
+        DialogEndGame
     ],
     imports: [
         BrowserModule,
@@ -27,7 +23,8 @@ import {MinerService} from './miner.service';
         BrowserAnimationsModule
     ],
     providers: [MinerService],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [DialogEndGame]
 })
 export class AppModule {
 }

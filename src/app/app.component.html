@@ -1,46 +1,58 @@
 <md-sidenav-container class="sidenav-container">
+
     <md-toolbar color="primary">
+
         <button md-icon-button (click)="sidenav.open()">
             <md-icon>menu</md-icon>
         </button>
+
         <span class="title">Сапер</span>
+
         <span class="spacer"></span>
+
         <button md-icon-button>
             <md-icon>more_vert</md-icon>
         </button>
+
     </md-toolbar>
 
 
     <md-sidenav #sidenav class="sidenav">
+
         <md-toolbar class="menu-header">
             <md-icon svgIcon="bomb"></md-icon>
             <span class="menu-title">Сапер</span>
         </md-toolbar>
 
         <form class="settings" #optionsForm="ngForm" novalidate>
-            <md-radio-group class="radio-group">
-                <md-radio-button *ngFor="let level of levels" class="radio" value="1">{{level.title}}</md-radio-button>
-                <!--<md-radio-button class="radio" value="2">Любитель</md-radio-button>-->
-                <!--<md-radio-button class="radio" value="3">Профессионал</md-radio-button>-->
-                <md-radio-button class="radio" value="4" #custom>Настроить</md-radio-button>
+            <md-radio-group class="radio-group" name="complexity" [(ngModel)]="complexity">
+
+                <md-radio-button class="radio"
+                                 *ngFor="let level of levels; let i = index; let f = first"
+                                 [value]="i">{{level.title}}</md-radio-button>
+
             </md-radio-group>
-            <div class="params" *ngIf="custom.checked">
-                <md-input-container>
-                    <input color="primary" mdInput [(ngModel)]="options.width"
-                           pattern="[\d]{1,2}"
-                           type="number"
-                           name="width"
-                           placeholder="Высота поля"
-                           required>
-                </md-input-container>
+
+            <div class="params" *ngIf="complexity == 3">
+
                 <md-input-container>
                     <input color="primary" mdInput [(ngModel)]="options.height"
                            pattern="[\d]{1,2}"
                            type="number"
                            name="height"
+                           placeholder="Высота поля"
+                           required>
+                </md-input-container>
+
+                <md-input-container>
+                    <input color="primary" mdInput [(ngModel)]="options.width"
+                           pattern="[\d]{1,2}"
+                           type="number"
+                           name="width"
                            placeholder="Ширина поля"
                            required>
                 </md-input-container>
+
                 <md-input-container>
                     <input color="primary" mdInput [(ngModel)]="options.mines"
                            pattern="[\d]{1,2}"
@@ -50,19 +62,18 @@
                            required>
                 </md-input-container>
             </div>
+
             <button md-raised-button
                     color="primary"
                     [disabled]="optionsForm.invalid"
                     class="play"
-                    (click)="play($event)">Играть</button>
+                    type="button"
+                    (click)="start(); sidenav.close()">Играть</button>
         </form>
     </md-sidenav>
 
     <md-card class="game-field">
-        <h1>Новичек</h1>
-
-        <h1 *ngIf="stateGame.victory">Victory!</h1>
-        <h1 *ngIf="stateGame.lose">Lose!</h1>
+        <h1>{{lvlTitle}}</h1>
 
         <div class="gameBox">
             <div *ngIf="field.length" class="gameField">
@@ -91,7 +102,8 @@
             </div>
         </div>
 
-
+        <div class="time">{{time}}</div>
+        <div class="mines">{{stateGame.mines}}</div>
 
     </md-card>
 
