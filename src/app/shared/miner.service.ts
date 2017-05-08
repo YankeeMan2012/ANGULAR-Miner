@@ -76,6 +76,7 @@ export class MinerService {
                 }
             }
             this.stateGame.lose = true;
+            cell.state = 4;
         } else if (!cell.title) {
             cell.state = 1;
             for (let i = cell.y - 1; i < cell.y + 2; i++) {

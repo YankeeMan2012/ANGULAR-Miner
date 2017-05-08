@@ -28,3 +28,4 @@ export interface ICell {
 //         1 - free open;
 //         2 - mine hidden;
 //         3 - mine open;
+//         4 - mine target;

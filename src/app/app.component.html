@@ -10,12 +10,29 @@
 
         <span class="spacer"></span>
 
-        <button md-icon-button>
-            <md-icon>more_vert</md-icon>
+        <button md-icon-button (click)="onStart()">
+            <md-icon>refresh</md-icon>
         </button>
 
-    </md-toolbar>
+        <button md-icon-button [mdMenuTriggerFor]="menu">
+            <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #menu="mdMenu">
+            <button md-menu-item (click)="showStatistics()">
+                <md-icon>star_border</md-icon>
+                <span>Лучше время</span>
+            </button>
+            <button md-menu-item (click)="showRules()">
+                <md-icon>list</md-icon>
+                <span>Правила</span>
+            </button>
+            <button md-menu-item (click)="showAbout()">
+                <md-icon>info_outline</md-icon>
+                <span>О игре</span>
+            </button>
+        </md-menu>
 
+    </md-toolbar>
 
     <md-sidenav #sidenav class="sidenav">
 
@@ -26,11 +43,9 @@
 
         <form class="settings" #optionsForm="ngForm" novalidate>
             <md-radio-group class="radio-group" name="complexity" [(ngModel)]="complexity">
-
                 <md-radio-button class="radio"
                                  *ngFor="let level of levels; let i = index; let f = first"
                                  [value]="i">{{level.title}}</md-radio-button>
-
             </md-radio-group>
 
             <div class="params" *ngIf="complexity == 3">
@@ -68,44 +83,58 @@
                     [disabled]="optionsForm.invalid"
                     class="play"
                     type="button"
-                    (click)="start(); sidenav.close()">Играть</button>
+                    (click)="onStart(); sidenav.close()">Играть</button>
         </form>
     </md-sidenav>
 
-    <md-card class="game-field">
-        <h1>{{lvlTitle}}</h1>
+    <div class="content">
+        <md-card class="game-card">
 
-        <div class="gameBox">
-            <div *ngIf="field.length" class="gameField">
-                <ul *ngFor="let row of field">
-                    <li *ngFor="let cell of row"
-                        (click)="cellClick(cell)"
-                        (mouseup)="up($event, cell)"
-                        (mousedown)="down($event, cell)"
-                        (contextmenu)="rightClick($event, cell)"
-                        [class.open]="cell.state == 1"
-                        [class.boom]="cell.state == 3"
-                        [class.flag]="cell.flag"
-                        [class.active]="cell.active"
+            <md-card-title class="title">{{lvlTitle}}</md-card-title>
 
-                        [class.one]="cell.title == 1"
-                        [class.two]="cell.title == 2"
-                        [class.three]="cell.title == 3"
-                        [class.four]="cell.title == 4"
-                        [class.five]="cell.title == 5"
-                        [class.six]="cell.title == 6"
-                        [class.seven]="cell.title == 7"
-                        [class.eight]="cell.title == 8"
+            <md-card-content>
+                <div class="gameBox">
+                    <div *ngIf="field.length" class="gameField">
+                        <ul *ngFor="let row of field">
+                            <li *ngFor="let cell of row"
+                                (click)="cellClick(cell)"
+                                (mouseup)="up($event, cell)"
+                                (mousedown)="down($event, cell)"
+                                (contextmenu)="rightClick($event, cell)"
+                                [class.open]="cell.state == 1"
+                                [class.boom]="cell.state == 3 || cell.state == 4"
+                                [class.boomTarget]="cell.state == 4"
+                                [class.flag]="cell.flag"
+                                [class.active]="cell.active"
 
-                    >{{cell.state == 1 ? cell.title : ''}}</li>
-                </ul>
-            </div>
-        </div>
+                                [class.one]="cell.title == 1"
+                                [class.two]="cell.title == 2"
+                                [class.three]="cell.title == 3"
+                                [class.four]="cell.title == 4"
+                                [class.five]="cell.title == 5"
+                                [class.six]="cell.title == 6"
+                                [class.seven]="cell.title == 7"
+                                [class.eight]="cell.title == 8"
 
-        <div class="time">{{time}}</div>
-        <div class="mines">{{stateGame.mines}}</div>
+                            >{{cell.state == 1 ? cell.title : ''}}</li>
+                        </ul>
+                    </div>
+                </div>
 
-    </md-card>
+                <div class="panel">
+                    <div class="infoBox">
+                        <md-icon svgIcon="timer"></md-icon>
+                        <div class="time info">{{time >= 999 ? 999 : time}}</div>
+                    </div>
+                    <div class="infoBox">
+                        <div class="mines info">{{stateGame.mines}}</div>
+                        <md-icon svgIcon="bomb"></md-icon>
+                    </div>
+                </div>
+            </md-card-content>
+
+        </md-card>
+    </div>
 
 </md-sidenav-container>
 

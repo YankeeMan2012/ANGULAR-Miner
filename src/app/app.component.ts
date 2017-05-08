@@ -1,17 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IOptions, ILevel, ICell, IState} from './shared/options.interface';
 import {levels} from './shared/levels';
+import {defStats} from './shared/statistics';
 import {MinerService} from './shared/miner.service';
 
 import {DomSanitizer} from '@angular/platform-browser';
-import {MdIconRegistry, MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+import {MdIconRegistry, MdDialog, MdDialogConfig} from '@angular/material';
+import {DialogEndGame} from "./end-game-dialog/dialog-end-game.component";
+import {DialogStatistics} from "./statistics-dialog/dialog-statistics.component";
+import {DialogRules} from "./rules-dialog/dialog-rules.component";
+import {DialogAbout} from "./about-dialog/dialog-about.component";
+import {DialogConfirm} from "./confirm-dialog/dialog-confirm.component";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
     private startGame: boolean = true;
     private field: ICell[][];
@@ -30,37 +36,23 @@ export class AppComponent implements OnInit {
 
     private interval;
     private time: number = 0;
-    private statistics = {
-        0: {
-            best: null,
-            game: 0,
-            win: 0,
-            date: ''
-        },
-        1: {
-            best: null,
-            game: 0,
-            win: 0,
-            date: ''
-        },
-        2: {
-            best: null,
-            game: 0,
-            win: 0,
-            date: ''
-        }
-    };
+    private statistics = defStats;
+
     constructor(private MINER: MinerService, iconRegistry: MdIconRegistry, sanitizer: DomSanitizer, public dialog: MdDialog) {
         iconRegistry.addSvgIcon('bomb', sanitizer.bypassSecurityTrustResourceUrl('assets/img/bomb.svg'));
+        iconRegistry.addSvgIcon('timer', sanitizer.bypassSecurityTrustResourceUrl('assets/img/signs.svg'));
+        iconRegistry.addSvgIcon('github', sanitizer.bypassSecurityTrustResourceUrl('assets/img/github.svg'));
         this.MINER.onChangeState.subscribe(
             (state: IState) => {
                 this.stateGame = state;
-                if (this.stateGame.victory) {
-                    this.endGame('Поздравляем, Вы выиграли!');
-                    this.saveStatistics(true);
-                } else if (this.stateGame.lose) {
-                    this.endGame('Вы проиграли!');
-                    this.saveStatistics(false);
+                if (!this.startGame) {
+                    if (this.stateGame.victory) {
+                        this.endGame('Поздравляем, Вы выиграли!');
+                        if (this.complexity !== 3) this.saveStatistics(true);
+                    } else if (this.stateGame.lose) {
+                        this.endGame('Вы проиграли!');
+                        if (this.complexity !== 3) this.saveStatistics(false);
+                    }
                 }
             }
         );
@@ -69,26 +61,50 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         if ('statistics' in localStorage) {
             this.statistics = JSON.parse(localStorage.statistics);
+        } else {
+            localStorage.statistics = JSON.stringify(this.statistics);
         }
         this.start();
     }
 
-    private endGame(msg): void {
+    ngOnDestroy() {
+        if (!this.startGame) {
+            this.saveStatistics(false);
+        }
+    }
+
+    private endGame(msg: string): void {
         this.timer(false);
+        this.startGame = true;
         const config = new MdDialogConfig();
-        config.disableClose = true;
-        config.data = { title: msg, time: this.time, stat: this.statistics[this.complexity] };
+        config.width = '450px';
+        config.data = { title: msg, time: this.time, stat: this.statistics[this.complexity], complexity: this.complexity };
         const dialogRef = this.dialog.open(DialogEndGame, config);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.start();
-            } else {
-                console.log('End Game');
             }
         });
     }
 
-    private start(): void {
+    private onStart(): void {
+        if (!this.startGame) {
+            const config = new MdDialogConfig();
+            config.data = { title: 'Текущая игра будет защитана как проигрыш. Продолжить?' };
+            let dialogRef = this.dialog.open(DialogConfirm, config);
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.start();
+                }
+            });
+        } else {
+            this.start();
+        }
+
+    }
+
+    private start() {
+        clearInterval(this.interval);
         if (this.complexity !== 3) {
             this.options = levels[this.complexity].params;
         }
@@ -100,7 +116,7 @@ export class AppComponent implements OnInit {
         this.time = 0;
     }
 
-    private timer(start): void {
+    private timer(start: boolean): void {
         if (start) {
             this.interval = setInterval(() => {
                 this.time++;
@@ -110,12 +126,12 @@ export class AppComponent implements OnInit {
         }
     }
 
-    private saveStatistics(win): void {
+    private saveStatistics(win: boolean): void {
         let data = this.statistics[this.complexity];
         if (win) {
             if (this.time < data.best || !data.best) {
                 data.best = this.time;
-                data.date = new Date();
+                data.date = new Date().toString();
             }
             data.win++;
         }
@@ -133,13 +149,13 @@ export class AppComponent implements OnInit {
         this.field = this.MINER.changeType(this.field, cell);
     }
 
-    private rightClick(e, cell) {
+    private rightClick(e, cell: ICell) {
         e.preventDefault();
         if (this.stateGame.lose || this.stateGame.victory) return;
         this.field = this.MINER.changeFlag(this.field, cell);
     }
 
-    private up(e, cell) {
+    private up(e, cell: ICell) {
         if (e.which === 3) this.rightPress = false;
         if (e.which === 1) this.leftPress = false;
         if (!this.leftPress || !this.rightPress) {
@@ -148,33 +164,29 @@ export class AppComponent implements OnInit {
         }
     }
 
-    private down(e, cell) {
+    private down(e, cell: ICell) {
         if (e.which === 3) this.rightPress = true;
         if (e.which === 1) this.leftPress = true;
         if (this.leftPress && this.rightPress) {
             this.field = this.MINER.changeActiveCells(this.field, cell, true);
         }
     }
-}
 
-@Component({
-    selector: 'dialog-end-game',
-    templateUrl: './dialog-end-game.html',
-})
-export class DialogEndGame implements OnInit {
-    private res: string;
-    private percent: number;
-
-
-    constructor(public dialogRef: MdDialogRef<DialogEndGame>) {}
-
-    ngOnInit(): void {
-        let configData: any = this.dialogRef._containerInstance.dialogConfig.data;
-        this.res = configData;
-        this.percent = Math.round((this.res['stat'].win / this.res['stat'].game) * 100);
+    private showStatistics() {
+        const dialogRef = this.dialog.open(DialogStatistics);
+        dialogRef.afterClosed().subscribe(() => {
+            this.statistics = JSON.parse(localStorage.statistics);
+        });
     }
 
-    private close(msg) {
-        this.dialogRef.close(msg);
+    private showRules() {
+        this.dialog.open(DialogRules);
     }
+
+    private showAbout() {
+        const config = new MdDialogConfig();
+        config.width = '450px';
+        this.dialog.open(DialogAbout, config);
+    }
+
 }

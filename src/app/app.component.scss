@@ -1,0 +1,179 @@
+$hiddenBack: radial-gradient(#5273dd, #344bbe);
+$openBack: radial-gradient(#bfd0e7, #e1e7f3);
+$hoverBack: radial-gradient(#a8c6fa, #a0bcf2);
+$theme: #3f51b5;
+
+.gameBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.content {
+	display: flex;
+	justify-content: center;
+}
+
+.game-card {
+	margin-top: 50px;
+}
+
+.gameField {
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+	border-radius: 2px;
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		display: flex;
+		flex-direction: row;
+		li {
+			width: 30px;
+			height: 30px;
+			background: $theme;
+			background: $hiddenBack;
+			line-height: 30px;
+			text-align: center;
+			cursor: pointer;
+			border: 1px solid #10224b;
+			user-select: none;
+			font-size: 20px;
+			font-weight: bold;
+			position: relative;
+			border-radius: 1px;
+			&:hover {
+				background: $hoverBack;
+			}
+			&.open {
+				background: $openBack;
+			}
+
+			&.boom {
+				background: $openBack;
+				&:before {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					width: 20px;
+					height: 20px;
+					background: url(../assets/img/bomb.svg) center center / cover no-repeat;
+				}
+			}
+
+			&.boomTarget {
+				&:before {
+					background: url(../assets/img/bombTarget.svg) center center / cover no-repeat;
+				}
+				background: radial-gradient(#f2ffff, #badddf);
+			}
+
+			&.flag {
+				background: $hiddenBack;
+				&:before {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					width: 18px;
+					height: 18px;
+					background: url(../assets/img/flag.svg) center center / cover no-repeat;
+				}
+			}
+
+			&.active { background: radial-gradient(#7ba2dd, #566ebb); }
+
+			&.one { color: #4651a5; }
+			&.two { color: #2c8d2a; }
+			&.three { color: #98030e; }
+			&.four { color: #03007b; }
+			&.five { color: #5e050d; }
+			&.six { color: #006c73; }
+			&.seven { color: #736600; }
+			&.eight { color: #5e3b50; }
+		}
+	}
+}
+
+.panel {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 20px;
+	.infoBox {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.info {
+		width: 40px;
+		background: $theme;
+		user-select: none;
+		cursor: default;
+		color: #fff;
+		line-height: 28px;
+		text-align: center;
+		border-radius: 2px;
+		box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+		margin: 10px;
+		font-size: 18px;
+	}
+	.time {
+		margin-right: 60px;
+	}
+	.mines {
+		margin-left: 60px;
+	}
+
+}
+
+.sidenav-container {
+	height: 100vh;
+	width: 100%;
+}
+
+.sidenav {
+	width: 250px;
+	.settings {
+		padding: 16px;
+	}
+
+	.menu-title {
+		margin-left: 20px;
+	}
+
+	.radio-group {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.radio {
+		padding: 10px 0;
+	}
+
+	.play {
+		text-transform: uppercase;
+		margin: 10px auto;
+		display: block;
+	}
+	.params {
+		padding: 10px 0;
+	}
+}
+
+h1 {
+	text-align: center;
+}
+
+.title {
+	padding: 0 16px;
+	text-align: center;
+	user-select: none;
+	cursor: default;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}

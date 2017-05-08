@@ -1,0 +1,26 @@
+:host {
+	font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.title {
+	text-align: center;
+	padding-bottom: 26px;
+	font-size: 18px;
+}
+
+.line {
+	padding: 16px 16px 0 16px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-size: 14px;
+	&:first-child {
+		padding-top: 30px;
+	}
+}
+
+.actions {
+	padding: 26px 10px 0 10px;
+	display: flex;
+	justify-content: flex-end;
+}

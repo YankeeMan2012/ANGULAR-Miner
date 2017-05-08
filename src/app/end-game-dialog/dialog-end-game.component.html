@@ -1,0 +1,24 @@
+<div class="title">{{res.title}}</div>
+<div class="content">
+    <div class="line">
+        <div class="time">Время: {{res.time}} сек.</div>
+        <div class="date" *ngIf="complexity !== 3">Дата: {{res['stat'].date ? (res['stat'].date | date: 'dd.MM.yyyy') : ' - '}}</div>
+    </div>
+    <div *ngIf="complexity !== 3">
+        <div class="line">
+            <div class="best">Лучшее время: {{res['stat'].best || ' - ' }} сек.</div>
+        </div>
+        <div class="line">
+            <div class="game">Проведено игр: {{res['stat'].game}}</div>
+        </div>
+        <div class="line">
+            <div class="win">Выиграно игр: {{res['stat'].win}}</div>
+            <div class="percent">Процент: {{percent}}%</div>
+        </div>
+    </div>
+
+</div>
+<div class="actions">
+    <button md-button color="primary" (click)="close(false)">Выход</button>
+    <button md-raised-button color="primary" (click)="close(true)">Новая игра</button>
+</div>
