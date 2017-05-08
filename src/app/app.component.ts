@@ -80,7 +80,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private onStart(): void {
         if (!this.startGame) {
             const config = new MdDialogConfig();
-            config.data = { title: 'Текущая игра будет защитана как проигрыш. Продолжить?' };
+            config.data = {title: 'Текущая игра будет защитана как проигрыш. Продолжить?'};
             const dialogRef = this.dialog.open(DialogConfirmComponent, config);
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -114,7 +114,12 @@ export class AppComponent implements OnInit, OnDestroy {
         this.startGame = true;
         const config = new MdDialogConfig();
         config.width = '450px';
-        config.data = { title: msg, time: this.time, stat: this.statistics[this.complexity], complexity: this.complexity };
+        config.data = {
+            title: msg,
+            time: this.time,
+            stat: this.statistics[this.complexity],
+            complexity: this.complexity
+        };
         const dialogRef = this.dialog.open(DialogEndGameComponent, config);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
