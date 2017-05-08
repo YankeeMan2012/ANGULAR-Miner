@@ -73,20 +73,6 @@ export class AppComponent implements OnInit, OnDestroy {
         }
     }
 
-    private endGame(msg: string): void {
-        this.timer(false);
-        this.startGame = true;
-        const config = new MdDialogConfig();
-        config.width = '450px';
-        config.data = { title: msg, time: this.time, stat: this.statistics[this.complexity], complexity: this.complexity };
-        const dialogRef = this.dialog.open(DialogEndGame, config);
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.start();
-            }
-        });
-    }
-
     private onStart(): void {
         if (!this.startGame) {
             const config = new MdDialogConfig();
@@ -105,15 +91,28 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private start() {
         clearInterval(this.interval);
-        if (this.complexity !== 3) {
-            this.options = levels[this.complexity].params;
-        }
+        if (!this.startGame) this.saveStatistics(false);
+        if (this.complexity !== 3) this.options = levels[this.complexity].params;
         this.MINER.setOptions(this.options);
         this.field = [];
         this.field = this.MINER.generateField(this.field);
         this.startGame = true;
         this.lvlTitle = this.levels[this.complexity].title;
         this.time = 0;
+    }
+
+    private endGame(msg: string): void {
+        this.timer(false);
+        this.startGame = true;
+        const config = new MdDialogConfig();
+        config.width = '450px';
+        config.data = { title: msg, time: this.time, stat: this.statistics[this.complexity], complexity: this.complexity };
+        const dialogRef = this.dialog.open(DialogEndGame, config);
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.start();
+            }
+        });
     }
 
     private timer(start: boolean): void {
@@ -171,6 +170,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.field = this.MINER.changeActiveCells(this.field, cell, true);
         }
     }
+
 
     private showStatistics() {
         const dialogRef = this.dialog.open(DialogStatistics);
