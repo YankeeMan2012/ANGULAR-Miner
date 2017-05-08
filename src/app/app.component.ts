@@ -6,11 +6,11 @@ import {MinerService} from './shared/miner.service';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MdIconRegistry, MdDialog, MdDialogConfig} from '@angular/material';
-import {DialogEndGame} from "./end-game-dialog/dialog-end-game.component";
-import {DialogStatistics} from "./statistics-dialog/dialog-statistics.component";
-import {DialogRules} from "./rules-dialog/dialog-rules.component";
-import {DialogAbout} from "./about-dialog/dialog-about.component";
-import {DialogConfirm} from "./confirm-dialog/dialog-confirm.component";
+import {DialogEndGameComponent} from './end-game-dialog/dialog-end-game.component';
+import {DialogStatisticsComponent} from './statistics-dialog/dialog-statistics.component';
+import {DialogRulesComponent} from './rules-dialog/dialog-rules.component';
+import {DialogAboutComponent} from './about-dialog/dialog-about.component';
+import {DialogConfirmComponent} from './confirm-dialog/dialog-confirm.component';
 
 @Component({
     selector: 'app-root',
@@ -48,10 +48,14 @@ export class AppComponent implements OnInit, OnDestroy {
                 if (!this.startGame) {
                     if (this.stateGame.victory) {
                         this.endGame('Поздравляем, Вы выиграли!');
-                        if (this.complexity !== 3) this.saveStatistics(true);
+                        if (this.complexity !== 3) {
+                            this.saveStatistics(true);
+                        }
                     } else if (this.stateGame.lose) {
                         this.endGame('Вы проиграли!');
-                        if (this.complexity !== 3) this.saveStatistics(false);
+                        if (this.complexity !== 3) {
+                            this.saveStatistics(false);
+                        }
                     }
                 }
             }
@@ -60,9 +64,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if ('statistics' in localStorage) {
-            this.statistics = JSON.parse(localStorage.statistics);
+            this.statistics = JSON.parse(localStorage['statistics']);
         } else {
-            localStorage.statistics = JSON.stringify(this.statistics);
+            localStorage['statistics'] = JSON.stringify(this.statistics);
         }
         this.start();
     }
@@ -77,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (!this.startGame) {
             const config = new MdDialogConfig();
             config.data = { title: 'Текущая игра будет защитана как проигрыш. Продолжить?' };
-            let dialogRef = this.dialog.open(DialogConfirm, config);
+            const dialogRef = this.dialog.open(DialogConfirmComponent, config);
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.start();
@@ -91,8 +95,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private start() {
         clearInterval(this.interval);
-        if (!this.startGame) this.saveStatistics(false);
-        if (this.complexity !== 3) this.options = levels[this.complexity].params;
+        if (!this.startGame) {
+            this.saveStatistics(false);
+        }
+        if (this.complexity !== 3) {
+            this.options = levels[this.complexity].params;
+        }
         this.MINER.setOptions(this.options);
         this.field = [];
         this.field = this.MINER.generateField(this.field);
@@ -107,7 +115,7 @@ export class AppComponent implements OnInit, OnDestroy {
         const config = new MdDialogConfig();
         config.width = '450px';
         config.data = { title: msg, time: this.time, stat: this.statistics[this.complexity], complexity: this.complexity };
-        const dialogRef = this.dialog.open(DialogEndGame, config);
+        const dialogRef = this.dialog.open(DialogEndGameComponent, config);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.start();
@@ -126,7 +134,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     private saveStatistics(win: boolean): void {
-        let data = this.statistics[this.complexity];
+        const data = this.statistics[this.complexity];
         if (win) {
             if (this.time < data.best || !data.best) {
                 data.best = this.time;
@@ -135,11 +143,13 @@ export class AppComponent implements OnInit, OnDestroy {
             data.win++;
         }
         data.game++;
-        localStorage.statistics = JSON.stringify(this.statistics);
+        localStorage['statistics'] = JSON.stringify(this.statistics);
     }
 
     private cellClick(cell: ICell): void {
-        if (cell.flag || this.stateGame.lose || this.stateGame.victory || cell.state === 1) return;
+        if (cell.flag || this.stateGame.lose || this.stateGame.victory || cell.state === 1) {
+            return;
+        }
         if (this.startGame) {
             this.startGame = false;
             this.field = this.MINER.generateMines(this.field, cell);
@@ -150,22 +160,32 @@ export class AppComponent implements OnInit, OnDestroy {
 
     private rightClick(e, cell: ICell) {
         e.preventDefault();
-        if (this.stateGame.lose || this.stateGame.victory) return;
+        if (this.stateGame.lose || this.stateGame.victory) {
+            return;
+        }
         this.field = this.MINER.changeFlag(this.field, cell);
     }
 
     private up(e, cell: ICell) {
-        if (e.which === 3) this.rightPress = false;
-        if (e.which === 1) this.leftPress = false;
+        if (e.which === 3) {
+            this.rightPress = false;
+        }
+        if (e.which === 1) {
+            this.leftPress = false;
+        }
         if (!this.leftPress || !this.rightPress) {
-            let isOpen: boolean = e.which === 1 && this.rightPress || e.which === 3 && this.leftPress;
+            const isOpen: boolean = e.which === 1 && this.rightPress || e.which === 3 && this.leftPress;
             this.field = this.MINER.changeActiveCells(this.field, cell, false, isOpen);
         }
     }
 
     private down(e, cell: ICell) {
-        if (e.which === 3) this.rightPress = true;
-        if (e.which === 1) this.leftPress = true;
+        if (e.which === 3) {
+            this.rightPress = true;
+        }
+        if (e.which === 1) {
+            this.leftPress = true;
+        }
         if (this.leftPress && this.rightPress) {
             this.field = this.MINER.changeActiveCells(this.field, cell, true);
         }
@@ -173,20 +193,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
     private showStatistics() {
-        const dialogRef = this.dialog.open(DialogStatistics);
+        const dialogRef = this.dialog.open(DialogStatisticsComponent);
         dialogRef.afterClosed().subscribe(() => {
-            this.statistics = JSON.parse(localStorage.statistics);
+            this.statistics = JSON.parse(localStorage['statistics']);
         });
     }
 
     private showRules() {
-        this.dialog.open(DialogRules);
+        this.dialog.open(DialogRulesComponent);
     }
 
     private showAbout() {
         const config = new MdDialogConfig();
         config.width = '450px';
-        this.dialog.open(DialogAbout, config);
+        this.dialog.open(DialogAboutComponent, config);
     }
 
 }

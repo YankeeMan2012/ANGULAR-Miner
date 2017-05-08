@@ -9,12 +9,6 @@ export interface ILevel {
     params: IOptions;
 }
 
-export interface IState {
-    victory: boolean,
-    lose: boolean,
-    mines: number,
-}
-
 export interface ICell {
     title: number;
     state: number;
@@ -24,8 +18,16 @@ export interface ICell {
     active: boolean;
 }
 
-// states: 0 - free hidden;
-//         1 - free open;
-//         2 - mine hidden;
-//         3 - mine open;
-//         4 - mine target;
+export interface IState {
+    victory: boolean;
+    lose: boolean;
+    mines: number;
+}
+
+/** STATE
+ * 0 - free hidden;
+ * 1 - free open;
+ * 2 - mine hidden;
+ * 3 - mine open;
+ * 4 - mine target;
+ **/

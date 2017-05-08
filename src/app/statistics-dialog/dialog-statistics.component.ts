@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {DialogConfirm} from "../confirm-dialog/dialog-confirm.component";
+import {DialogConfirmComponent} from '../confirm-dialog/dialog-confirm.component';
 
-interface lvlStats {
+interface LvlStats {
     best: number;
     date: string;
     game: number;
@@ -12,15 +12,15 @@ interface lvlStats {
 }
 
 @Component({
-    selector: 'dialog-statistics',
+    selector: 'app-dialog-statistics',
     templateUrl: './dialog-statistics.component.html',
     styleUrls: ['./dialog-statistics.component.scss']
 })
-export class DialogStatistics implements OnInit {
+export class DialogStatisticsComponent implements OnInit {
 
-    private statistics: lvlStats[];
+    private statistics: LvlStats[];
 
-    constructor(public dialogRef: MdDialogRef<DialogStatistics>, public dialog: MdDialog) {}
+    constructor(public dialogRef: MdDialogRef<DialogStatisticsComponent>, public dialog: MdDialog) {}
 
     ngOnInit(): void {
         this.statistics = JSON.parse(localStorage.statistics);
@@ -32,7 +32,7 @@ export class DialogStatistics implements OnInit {
     private onClear(stat) {
         const config = new MdDialogConfig();
         config.data = { title: 'Вы действительно хотите очистить статистику?' };
-        let dialogRef = this.dialog.open(DialogConfirm, config);
+        const dialogRef = this.dialog.open(DialogConfirmComponent, config);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.clearStats(stat);

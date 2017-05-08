@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 import {MdDialogRef} from '@angular/material';
 
 @Component({
-    selector: 'dialog-rules',
+    selector: 'app-dialog-rules',
     templateUrl: './dialog-rules.component.html',
     styleUrls: ['./dialog-rules.component.scss']
 })
-export class DialogRules {
+export class DialogRulesComponent {
 
-    constructor(public dialogRef: MdDialogRef<DialogRules>) {}
+    constructor(public dialogRef: MdDialogRef<DialogRulesComponent>) {}
 
     private close(flag: boolean) {
         this.dialogRef.close(flag);

@@ -1,10 +1,9 @@
 import {IOptions, ICell, IState} from './options.interface';
-import {Subject} from "rxjs";
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class MinerService {
-
     public onChangeState = new Subject();
     private freeCounter: number;
     private options: IOptions;
@@ -32,7 +31,9 @@ export class MinerService {
 
         for (let h = 0; h < this.options.height; h++) {
             for (let w = 0; w < this.options.width; w++) {
-                if (!field[h]) field[h] = [];
+                if (!field[h]) {
+                    field[h] = [];
+                }
                 field[h][w] = { title: null, state: 0, x: w, y: h, flag: false, active: false, };
             }
         }
@@ -65,13 +66,13 @@ export class MinerService {
     }
 
     public changeType(field: ICell[][], cell: ICell): ICell[][] {
-        let h = this.options.height;
-        let w = this.options.width;
+        const h = this.options.height;
+        const w = this.options.width;
         if (cell.state === 2) {
             for (let i = 0; i < h; i++) {
                 for (let j = 0; j < w; j++) {
                     if (field[i][j].state === 2) {
-                        field[i][j].state = 3
+                        field[i][j].state = 3;
                     }
                 }
             }
@@ -104,11 +105,13 @@ export class MinerService {
                     } else if ((field[i][j].state === 0 || field[i][j].state === 2) && !field[i][j].flag) {
                         field[i][j].active = flag;
                     }
-                    if (field[i][j].flag) flagCounter++;
+                    if (field[i][j].flag) {
+                        flagCounter++;
+                    }
                 }
             }
         }
-        if (cell.title == flagCounter && open) {
+        if (cell.title === flagCounter && open) {
             for (let i = cell.y - 1; i < cell.y + 2; i++) {
                 for (let j = cell.x - 1; j < cell.x + 2; j++) {
                     if (i >= 0 && i < this.options.height && j >= 0 && j < this.options.width) {
@@ -127,18 +130,15 @@ export class MinerService {
             cell.flag = !cell.flag;
             cell.flag ? this.stateGame.mines-- : this.stateGame.mines++;
         }
-        // cell.flag = (cell.state === 0 || cell.state === 2) && !cell.flag;
-        // cell.flag ? this.stateGame.mines-- : this.stateGame.mines++;
         this.changeState();
         return field;
     }
 
     private countFreeCells(): void {
         this.freeCounter++;
-        let freeCells = this.options.width * this.options.height - this.options.mines - this.freeCounter;
+        const freeCells = this.options.width * this.options.height - this.options.mines - this.freeCounter;
         if (freeCells === 0) {
             this.stateGame.victory = true;
         }
     }
-
 }

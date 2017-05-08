@@ -4,25 +4,25 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {MaterialModule} from '@angular/material';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
 
 import {AppComponent} from './app.component';
-import {DialogEndGame} from './end-game-dialog/dialog-end-game.component';
-import {DialogStatistics} from './statistics-dialog/dialog-statistics.component';
+import {DialogEndGameComponent} from './end-game-dialog/dialog-end-game.component';
+import {DialogStatisticsComponent} from './statistics-dialog/dialog-statistics.component';
 import {MinerService} from './shared/miner.service';
-import {DialogConfirm} from "./confirm-dialog/dialog-confirm.component";
-import {DialogRules} from "./rules-dialog/dialog-rules.component";
-import {DialogAbout} from "./about-dialog/dialog-about.component";
+import {DialogConfirmComponent} from './confirm-dialog/dialog-confirm.component';
+import {DialogRulesComponent} from './rules-dialog/dialog-rules.component';
+import {DialogAboutComponent} from './about-dialog/dialog-about.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        DialogEndGame,
-        DialogStatistics,
-        DialogConfirm,
-        DialogRules,
-        DialogAbout
+        DialogEndGameComponent,
+        DialogStatisticsComponent,
+        DialogConfirmComponent,
+        DialogRulesComponent,
+        DialogAboutComponent
     ],
     imports: [
         BrowserModule,
@@ -34,11 +34,11 @@ import {DialogAbout} from "./about-dialog/dialog-about.component";
     providers: [MinerService],
     bootstrap: [AppComponent],
     entryComponents: [
-        DialogEndGame,
-        DialogStatistics,
-        DialogConfirm,
-        DialogRules,
-        DialogAbout
+        DialogEndGameComponent,
+        DialogStatisticsComponent,
+        DialogConfirmComponent,
+        DialogRulesComponent,
+        DialogAboutComponent
     ]
 })
 export class AppModule {

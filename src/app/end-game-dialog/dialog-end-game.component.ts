@@ -2,16 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {MdDialogRef} from '@angular/material';
 
 @Component({
-    selector: 'dialog-end-game',
+    selector: 'app-dialog-end-game',
     templateUrl: './dialog-end-game.component.html',
     styleUrls: ['./dialog-end-game.component.scss']
 })
-export class DialogEndGame implements OnInit {
+export class DialogEndGameComponent implements OnInit {
     private res: string;
     private percent: number;
     private complexity: number = 0;
 
-    constructor(public dialogRef: MdDialogRef<DialogEndGame>) {}
+    constructor(public dialogRef: MdDialogRef<DialogEndGameComponent>) {}
 
     ngOnInit(): void {
         this.res = this.dialogRef._containerInstance.dialogConfig.data;
