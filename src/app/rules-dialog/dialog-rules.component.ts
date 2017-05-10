@@ -10,7 +10,7 @@ export class DialogRulesComponent {
 
     constructor(public dialogRef: MdDialogRef<DialogRulesComponent>) {}
 
-    private close(flag: boolean) {
+    private close(flag: boolean): void {
         this.dialogRef.close(flag);
     }
 }

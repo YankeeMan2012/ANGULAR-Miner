@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import {MdDialog, MdDialogConfig} from '@angular/material';
 import {DialogConfirmComponent} from '../confirm-dialog/dialog-confirm.component';
 
 interface LvlStats {
@@ -20,7 +20,7 @@ export class DialogStatisticsComponent implements OnInit {
 
     private statistics: LvlStats[];
 
-    constructor(public dialogRef: MdDialogRef<DialogStatisticsComponent>, public dialog: MdDialog) {}
+    constructor(public dialog: MdDialog) {}
 
     ngOnInit(): void {
         this.statistics = JSON.parse(localStorage.statistics);
@@ -29,7 +29,7 @@ export class DialogStatisticsComponent implements OnInit {
         });
     }
 
-    private onClear(stat) {
+    private onClear(stat): void {
         const config = new MdDialogConfig();
         config.data = { title: 'Вы действительно хотите очистить статистику?' };
         const dialogRef = this.dialog.open(DialogConfirmComponent, config);
@@ -40,7 +40,7 @@ export class DialogStatisticsComponent implements OnInit {
         });
     }
 
-    private clearStats(stat) {
+    private clearStats(stat): void {
         stat.best = null;
         stat.game = 0;
         stat.win = 0;

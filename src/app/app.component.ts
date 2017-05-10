@@ -19,7 +19,7 @@ import {DialogConfirmComponent} from './confirm-dialog/dialog-confirm.component'
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-    private startGame: boolean = true;
+    private startGame = true;
     private field: ICell[][];
     private options: IOptions;
     private stateGame = {
@@ -29,13 +29,13 @@ export class AppComponent implements OnInit, OnDestroy {
     };
     private levels: ILevel[] = levels;
     private complexity = 0;
-    private lvlTitle: string = this.levels[this.complexity].title;
+    private lvlTitle = this.levels[this.complexity].title;
 
-    private rightPress: boolean = false;
-    private leftPress: boolean = false;
+    private rightPress = false;
+    private leftPress = false;
 
     private interval;
-    private time: number = 0;
+    private time = 0;
     private statistics = defStats;
 
     constructor(private MINER: MinerService, iconRegistry: MdIconRegistry, sanitizer: DomSanitizer, public dialog: MdDialog) {
@@ -62,7 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
         );
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         if ('statistics' in localStorage) {
             this.statistics = JSON.parse(localStorage['statistics']);
         } else {
@@ -71,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.start();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (!this.startGame) {
             this.saveStatistics(false);
         }
@@ -93,7 +93,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     }
 
-    private start() {
+    private start(): void {
         clearInterval(this.interval);
         if (!this.startGame) {
             this.saveStatistics(false);
@@ -163,7 +163,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.field = this.MINER.changeType(this.field, cell);
     }
 
-    private rightClick(e, cell: ICell) {
+    private rightClick(e, cell: ICell): void {
         e.preventDefault();
         if (this.stateGame.lose || this.stateGame.victory) {
             return;
@@ -171,7 +171,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.field = this.MINER.changeFlag(this.field, cell);
     }
 
-    private up(e, cell: ICell) {
+    private up(e, cell: ICell): void {
         if (e.which === 3) {
             this.rightPress = false;
         }
@@ -179,12 +179,12 @@ export class AppComponent implements OnInit, OnDestroy {
             this.leftPress = false;
         }
         if (!this.leftPress || !this.rightPress) {
-            const isOpen: boolean = e.which === 1 && this.rightPress || e.which === 3 && this.leftPress;
+            const isOpen = e.which === 1 && this.rightPress || e.which === 3 && this.leftPress;
             this.field = this.MINER.changeActiveCells(this.field, cell, false, isOpen);
         }
     }
 
-    private down(e, cell: ICell) {
+    private down(e, cell: ICell): void {
         if (e.which === 3) {
             this.rightPress = true;
         }
@@ -197,18 +197,18 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
 
-    private showStatistics() {
+    private showStatistics(): void {
         const dialogRef = this.dialog.open(DialogStatisticsComponent);
         dialogRef.afterClosed().subscribe(() => {
             this.statistics = JSON.parse(localStorage['statistics']);
         });
     }
 
-    private showRules() {
+    private showRules(): void {
         this.dialog.open(DialogRulesComponent);
     }
 
-    private showAbout() {
+    private showAbout(): void {
         const config = new MdDialogConfig();
         config.width = '450px';
         this.dialog.open(DialogAboutComponent, config);

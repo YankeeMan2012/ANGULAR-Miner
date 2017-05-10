@@ -15,7 +15,7 @@ export class DialogConfirmComponent implements OnInit {
         this.res = this.dialogRef._containerInstance.dialogConfig.data;
     }
 
-    private close(flag: boolean) {
+    private close(flag: boolean): void {
         this.dialogRef.close(flag);
     }
 }

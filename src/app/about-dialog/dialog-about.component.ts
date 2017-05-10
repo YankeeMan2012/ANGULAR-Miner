@@ -11,7 +11,7 @@ export class DialogAboutComponent {
     constructor(public dialogRef: MdDialogRef<DialogAboutComponent>) {
     }
 
-    private close(flag: boolean) {
+    private close(flag: boolean): void {
         this.dialogRef.close(flag);
     }
 }

@@ -3,7 +3,18 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
-import {MaterialModule} from '@angular/material';
+import {
+    MdInputModule,
+    MdRadioModule,
+    MdMenuModule,
+    MdSidenavModule,
+    MdToolbarModule,
+    MdCardModule,
+    MdTabsModule,
+    MdButtonModule,
+    MdIconModule,
+    MdDialogModule
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
 
@@ -28,7 +39,16 @@ import {DialogAboutComponent} from './about-dialog/dialog-about.component';
         BrowserModule,
         FormsModule,
         HttpModule,
-        MaterialModule,
+        MdInputModule,
+        MdRadioModule,
+        MdMenuModule,
+        MdSidenavModule,
+        MdToolbarModule,
+        MdCardModule,
+        MdTabsModule,
+        MdButtonModule,
+        MdIconModule,
+        MdDialogModule,
         BrowserAnimationsModule
     ],
     providers: [MinerService],
