@@ -13,7 +13,7 @@ import {
     MdTabsModule,
     MdButtonModule,
     MdIconModule,
-    MdDialogModule
+    MdDialogModule, MdProgressSpinnerModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';

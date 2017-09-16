@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {MdDialogRef} from '@angular/material';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 
 @Component({
     selector: 'app-dialog-confirm',
@@ -7,12 +7,11 @@ import {MdDialogRef} from '@angular/material';
     styleUrls: ['./dialog-confirm.component.scss']
 })
 export class DialogConfirmComponent implements OnInit {
-    private res: string;
 
-    constructor(public dialogRef: MdDialogRef<DialogConfirmComponent>) {}
+    constructor(public dialogRef: MdDialogRef<DialogConfirmComponent>,
+                @Inject(MD_DIALOG_DATA) private res: any) {}
 
     ngOnInit(): void {
-        this.res = this.dialogRef._containerInstance.dialogConfig.data;
     }
 
     private close(flag: boolean): void {

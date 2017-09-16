@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {MdDialogRef} from '@angular/material';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 
 @Component({
     selector: 'app-dialog-end-game',
@@ -11,10 +11,11 @@ export class DialogEndGameComponent implements OnInit {
     private percent: number;
     private complexity: number = 0;
 
-    constructor(public dialogRef: MdDialogRef<DialogEndGameComponent>) {}
+    constructor(public dialogRef: MdDialogRef<DialogEndGameComponent>,
+                @Inject(MD_DIALOG_DATA) private data: any) {}
 
     ngOnInit(): void {
-        this.res = this.dialogRef._containerInstance.dialogConfig.data;
+        this.res = this.data;
         this.complexity = this.res['complexity'];
         if (this.complexity !== 3) {
             this.percent = Math.round((this.res['stat'].win / this.res['stat'].game) * 100);
