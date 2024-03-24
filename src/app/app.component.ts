@@ -47,12 +47,12 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.stateGame = state;
                 if (!this.startGame) {
                     if (this.stateGame.victory) {
-                        this.endGame('Поздравляем, Вы выиграли!');
+                        this.endGame('Congratulations, you`ve won!');
                         if (this.complexity !== 3) {
                             this.saveStatistics(true);
                         }
                     } else if (this.stateGame.lose) {
-                        this.endGame('Вы проиграли!');
+                        this.endGame('You lose');
                         if (this.complexity !== 3) {
                             this.saveStatistics(false);
                         }
@@ -80,7 +80,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private onStart(): void {
         if (!this.startGame) {
             const config = new MdDialogConfig();
-            config.data = {title: 'Текущая игра будет защитана как проигрыш. Продолжить?'};
+            config.data = {title: 'The current game will be counted as a loss. Continue?'};
             const dialogRef = this.dialog.open(DialogConfirmComponent, config);
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {

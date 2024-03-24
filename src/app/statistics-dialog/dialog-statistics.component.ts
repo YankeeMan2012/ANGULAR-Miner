@@ -31,7 +31,7 @@ export class DialogStatisticsComponent implements OnInit {
 
     private onClear(stat): void {
         const config = new MdDialogConfig();
-        config.data = { title: 'Вы действительно хотите очистить статистику?' };
+        config.data = { title: 'Are you sure that you want to clear statistics?' };
         const dialogRef = this.dialog.open(DialogConfirmComponent, config);
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

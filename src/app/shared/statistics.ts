@@ -4,20 +4,20 @@ export const defStats = [
         game: 0,
         win: 0,
         date: '',
-        title: 'Новичек'
+        title: 'Beginner'
     },
     {
         best: null,
         game: 0,
         win: 0,
         date: '',
-        title: 'Любитель'
+        title: 'Amateur'
     },
     {
         best: null,
         game: 0,
         win: 0,
         date: '',
-        title: 'Профессионал'
+        title: 'Professional'
     }
 ];

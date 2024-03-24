@@ -1,6 +1,6 @@
 export const levels = [
     {
-        title: 'Новичок',
+        title: 'Beginner',
         params: {
             width: 9,
             height: 9,
@@ -8,7 +8,7 @@ export const levels = [
         }
     },
     {
-        title: 'Любитель',
+        title: 'Amateur',
         params: {
             width: 16,
             height: 16,
@@ -16,7 +16,7 @@ export const levels = [
         }
     },
     {
-        title: 'Профессионал',
+        title: 'Professional',
         params: {
             width: 30,
             height: 16,
@@ -24,7 +24,7 @@ export const levels = [
         }
     },
     {
-        title: 'Настроенный',
+        title: 'Configured',
         params: {
             width: null,
             height: null,

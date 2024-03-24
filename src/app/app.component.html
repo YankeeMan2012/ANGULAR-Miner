@@ -6,7 +6,7 @@
             <md-icon>menu</md-icon>
         </button>
 
-        <span class="title">Сапер</span>
+        <span class="title">Miner</span>
 
         <span class="spacer"></span>
 
@@ -20,15 +20,15 @@
         <md-menu #menu="mdMenu">
             <button md-menu-item (click)="showStatistics()">
                 <md-icon>star_border</md-icon>
-                <span>Лучше время</span>
+                <span>Statistics</span>
             </button>
             <button md-menu-item (click)="showRules()">
                 <md-icon>list</md-icon>
-                <span>Правила</span>
+                <span>Rules</span>
             </button>
             <button md-menu-item (click)="showAbout()">
                 <md-icon>info_outline</md-icon>
-                <span>О игре</span>
+                <span>About</span>
             </button>
         </md-menu>
 
@@ -38,7 +38,7 @@
 
         <md-toolbar class="menu-header">
             <md-icon svgIcon="bomb"></md-icon>
-            <span class="menu-title">Сапер</span>
+            <span class="menu-title">Miner</span>
         </md-toolbar>
 
         <form class="settings" #optionsForm="ngForm" novalidate>
@@ -55,7 +55,7 @@
                            pattern="[\d]{1,2}"
                            type="number"
                            name="height"
-                           placeholder="Высота поля"
+                           placeholder="Game field height"
                            required>
                 </md-input-container>
 
@@ -64,7 +64,7 @@
                            pattern="[\d]{1,2}"
                            type="number"
                            name="width"
-                           placeholder="Ширина поля"
+                           placeholder="Game field width"
                            required>
                 </md-input-container>
 
@@ -73,7 +73,7 @@
                            pattern="[\d]{1,2}"
                            type="number"
                            name="mines"
-                           placeholder="Количество мин"
+                           placeholder="Number of mines"
                            required>
                 </md-input-container>
             </div>
@@ -83,7 +83,7 @@
                     [disabled]="optionsForm.invalid"
                     class="play"
                     type="button"
-                    (click)="onStart(); sidenav.close()">Играть</button>
+                    (click)="onStart(); sidenav.close()">Play</button>
         </form>
     </md-sidenav>
 

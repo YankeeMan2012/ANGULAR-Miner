@@ -1,20 +1,20 @@
-<div class="title">Статистика</div>
+<div class="title">Statistics</div>
 <div class="content">
     <md-tab-group>
         <md-tab *ngFor="let stat of statistics" label="{{stat.title}}">
                 <div class="line">
-                    <div class="best">Лучшее время: {{stat.best || ' - ' }} сек.</div>
-                    <div class="date">Дата: {{stat.date ? (stat.date | date: 'dd.MM.yyyy') : ' - '}}</div>
+                    <div class="best">Best time: {{stat.best || ' - ' }} sec.</div>
+                    <div class="date">Date: {{stat.date ? (stat.date | date: 'dd.MM.yyyy') : ' - '}}</div>
                 </div>
                 <div class="line">
-                    <div class="game">Проведено игр: {{stat.game}}</div>
+                    <div class="game">Games: {{stat.game}}</div>
                 </div>
                 <div class="line">
-                    <div class="win">Выиграно игр: {{stat.win}}</div>
-                    <div class="percent">Процент: {{stat.percent ? (stat.percent | number: '1.0-0') : 0}}%</div>
+                    <div class="win">Wins: {{stat.win}}</div>
+                    <div class="percent">Winning percentage: {{stat.percent ? (stat.percent | number: '1.0-0') : 0}}%</div>
                 </div>
                 <div class="actions">
-                    <button md-button color="primary" (click)="onClear(stat)">Очистить</button>
+                    <button md-button color="primary" (click)="onClear(stat)">Clear</button>
                 </div>
         </md-tab>
     </md-tab-group>
